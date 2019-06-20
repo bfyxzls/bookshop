@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lind.bookshop.mapper.UserInfoMapper">
+    <resultMap type="UserInfo" id="lazyUserInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <!--  select：要延迟加载的statement的id
+              colunm：关联两张表的那个列的列名
+             association：一对一的关系  -->
+        <association property="userShipper"
+                     javaType="UserShipper"
+                     select="findUserShipper"
+                     column="id">
+        </association>
+
+        <collection property="orderInfoList"
+                    ofType="OrderInfo"
+                    select="com.lind.bookshop.mapper.OrderInfoMapper.findOrderList"
+                    column="id">
+        </collection>
+    </resultMap>
+    <select id="findUserShipper" parameterType="long" resultType="UserShipper">
+        SELECT * FROM user_shipper WHERE user_id =#{value} limit 1
+    </select>
+
+    <select id="findUsers" resultType="UserInfo" resultMap="lazyUserInfo">
+        SELECT * FROM user_info
+    </select>
+
+    <select id="findUserById" resultType="UserInfo" parameterType="Long" resultMap="lazyUserInfo">
+        SELECT * FROM user_info where id=#{id} limit 1
+    </select>
+
+    <select id="findUserByNamePassword" resultType="UserInfo" parameterType="Map" resultMap="lazyUserInfo">
+        SELECT * FROM user_info where username=#{userName} and password=#{password} limit 1
+    </select>
+    <select id="findUserByName" resultType="UserInfo" parameterType="Map" resultMap="lazyUserInfo">
+        SELECT * FROM user_info where username=#{userName} limit 1
+    </select>
+    <select id="findMapUsers" resultType="Map">
+        SELECT * FROM user_info
+    </select>
+
+</mapper>

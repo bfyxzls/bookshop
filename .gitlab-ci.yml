@@ -1,0 +1,53 @@
+image: gradle:4.2-jdk8
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+cache:
+  key: "$CI_COMMIT_REF_NAME"
+  untracked: true
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  script: gradle clean assemble --stacktrace
+  cache:
+      key: "$CI_COMMIT_REF_NAME"
+      policy: push
+      paths:
+        - build
+        - .gradle
+  except:
+        - master
+
+test:
+  stage: test
+  script: gradle check
+  cache:
+      key: "$CI_COMMIT_REF_NAME"
+      policy: push
+      paths:
+        - build
+        - .gradle
+  except:
+      - master
+
+deploy:
+  stage: deploy
+  script:
+    echo "deploy master branch."
+  only:
+    - master
+#production:
+#  stage: deploy
+#  script:
+#  - curl --location "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar zx
+#  - ./cf login -u $CF_USERNAME -p $CF_PASSWORD -a api.run.pivotal.io
+#  - ./cf push
+#  only:
+#  - master
+#
+#https://docs.gitlab.com/ee/ci/examples/deploy_spring_boot_to_cloud_foundry/
+#https://about.gitlab.com/2016/12/14/continuous-delivery-of-a-spring-boot-application-with-gitlab-ci-and-kubernetes/

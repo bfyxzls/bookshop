@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/admin">
+<head><title>添加产品</title></head>
+<body>
+<th:block layout:fragment="title">添加产品</th:block>
+
+<th:block layout:fragment="content">
+    <a href="/book/list" class="btn btn-default">产品管理</a>
+    <form class="form-horizontal" th:object="${book}" th:action="@{/book/create}" method="post"
+          enctype="multipart/form-data" id="regform">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">名称:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{name}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">分类:</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="categoryId">
+                    <option>请选择分类</option>
+                    <option th:each="item:${list}" th:value="${item.id}" th:text="${item.name }"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">销售价:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{salePrice}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">成本价</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{floorPrice}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">折扣</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{discount}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">是否推荐</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{isRecommend}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">是否最新</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{isNew}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">图像</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control" th:field="*{imgUrl}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <button type="button" id="reg" class="btn btn-default">提交</button>
+            </div>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+$(function(){
+ $("#reg").click(function(){
+  $.post("/category/create",$("#regform").serialize(),function(data){
+    if(data.status!=200){
+       alert(data.error.message);
+      }
+      location.href="/book/list";
+     })
+  });
+});
+
+    </script>
+</th:block>
+
+</body>
+</html>

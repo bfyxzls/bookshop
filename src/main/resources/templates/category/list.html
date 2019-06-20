@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th=""
+      layout:decorator="layout/admin">
+
+<head>
+    <title>技术资源分类</title>
+</head>
+<body>
+<th:block layout:fragment="title">技术资源分类</th:block>
+
+<div layout:fragment="content">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>级别</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="collect,iterStat : ${list}">
+            <td th:text="${collect.id}">lind</td>
+            <td th:text="${collect.name}">0</td>
+            <td th:text="${collect.level}">0</td>
+            <td><a th:href="@{/category/del(id=${collect.id})}">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

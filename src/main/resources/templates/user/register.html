@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/default">
+<head><title>注册</title></head>
+<body>
+<th:block layout:fragment="title">注册</th:block>
+
+<th:block layout:fragment="content">
+    <form class="form-horizontal" th:object="${user}" th:action="@{/register}" method="post" id="regform">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">用户名:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{username}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">密码:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{password}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">真实姓名:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{realname}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">电子邮件</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{email}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">手机</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{telephone}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">年纪</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{age}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <button type="button" id="reg" class="btn btn-default">注册</button>
+            </div>
+        </div>
+
+    </form>
+    <script type="text/javascript">
+$(function(){
+ $("#reg").click(function(){
+  $.post("/register",$("#regform").serialize(),function(data){
+    if(data.status!=200){
+       alert(data.error.message);
+     }else{
+     location.href="/login";
+     }
+     })
+  });
+});
+
+    </script>
+</th:block>
+
+</body>
+</html>

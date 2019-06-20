@@ -1,0 +1,110 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.4.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        maven {
+            name "aliyun1"
+            url 'http://maven.aliyun.com/nexus/content/groups/public'
+        }
+        maven {
+            name "aliyun2"
+            url 'http://maven.aliyun.com/mvn/repository/'
+        }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        mavenCentral()
+
+
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+group = 'com.lind'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+repositories {
+    mavenLocal()
+    maven {
+        name "aliyun1"
+        url 'http://maven.aliyun.com/nexus/content/groups/public'
+    }
+    maven {
+        name "aliyun2"
+        url 'http://maven.aliyun.com/mvn/repository/'
+    }
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+    mavenCentral()
+}
+
+/* spring cloud依赖包 begin */
+ext {
+    springCloudVersion = 'Finchley.SR1'
+}
+
+dependencyManagement {
+    imports {
+        // spring bom helps us to declare dependencies without specifying version numbers.
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+/* spring cloud依赖包 end */
+dependencies {
+    compile(
+            'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.boot:spring-boot-starter-actuator',
+            //springboot2.0需要引用thymeleaf-layout-dialect,而1.5不需要引用它
+            'org.springframework.boot:spring-boot-starter-thymeleaf',
+            'com.github.zhanhb:thymeleaf-layout-dialect:2.3.0',
+            'org.springframework.boot:spring-boot-starter-cache',
+            'com.baomidou:mybatis-plus-boot-starter:3.0.6',
+            'org.springframework.cloud:spring-cloud-starter-openfeign',
+            'org.apache.commons:commons-lang3:3.5',
+            'com.h2database:h2',
+            'org.springframework.boot:spring-boot-devtools',
+            'org.springframework.boot:spring-boot-starter-security'
+
+    )
+    runtime 'mysql:mysql-connector-java'
+    compileOnly('org.projectlombok:lombok')
+
+    testCompile(
+            'org.springframework.boot:spring-boot-starter-test',
+
+    )
+}
+//测试报告
+Closure testReport(testType) {
+    return { desc, result ->
+        if (!desc.parent) { // will match the outermost suite
+            def output = "${testType} Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+            def startItem = '|  ', endItem = '  |'
+            def repeatLength = startItem.length() + output.length() + endItem.length()
+            println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+        }
+
+    }
+}
+
+test {
+    testLogging {
+        events "started", "passed", "skipped", "failed"
+        afterSuite testReport("test")
+    }
+}

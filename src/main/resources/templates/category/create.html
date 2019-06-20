@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/admin">
+<head><title>添加分类</title></head>
+<body>
+<th:block layout:fragment="title">添加分类</th:block>
+
+<th:block layout:fragment="content">
+    <form class="form-horizontal" th:object="${category}" th:action="@{/book/create}" method="post" id="regform">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">分类名称:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{name}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">上级:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{parentId}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">等级:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{level}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <button type="button" id="reg" class="btn btn-default">提交</button>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+$(function(){
+ $("#reg").click(function(){
+  $.post("/category/create",$("#regform").serialize(),function(data){
+    if(data.status!=200){
+       alert(data.error.message);
+      }
+      location.href="/category/list";
+     })
+  });
+});
+
+    </script>
+</th:block>
+
+</body>
+</html>

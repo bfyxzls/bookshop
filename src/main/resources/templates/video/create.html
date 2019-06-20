@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/default">
+<head><title>添加视频</title></head>
+<body>
+<th:block layout:fragment="title">添加视频</th:block>
+
+<th:block layout:fragment="content">
+    <a href="/video/list" class="btn btn-default">视频管理</a>
+
+    <form class="form-horizontal" th:object="${video}" method="post" id="regform">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">名称:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{title}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">地址:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{filePath}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">介绍:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{information}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <button type="button" id="reg" class="btn btn-default">提交</button>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+$(function(){
+ $("#reg").click(function(){
+  $.post("/video/create",$("#regform").serialize(),function(data){
+    if(data.status!=200){
+       alert(data.error.message);
+      }
+      location.href="/video/list";
+     })
+  });
+});
+
+    </script>
+</th:block>
+
+</body>
+</html>

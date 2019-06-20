@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lind.bookshop.mapper.OrderItemMapper">
+    <resultMap type="OrderItem" id="lazyOrderItem">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+
+        <!--  select：要延迟加载的statement的id
+              colunm：关联两张表的那个列的列名
+             association：一对一的关系  -->
+        <association property="videoLesson"
+                     javaType="VideoLesson"
+                     select="findVideoLesson"
+                     column="book_id">
+        </association>
+    </resultMap>
+    <select id="findVideoLesson" resultType="VideoLesson" parameterType="Long">
+        select * from video_lesson where id=#{id} limit 1
+    </select>
+    <select id="findOrderItemList" resultType="OrderItem" parameterType="Long" resultMap="lazyOrderItem">
+        select * from order_item where order_info_id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/default">
+<head><title>登录</title></head>
+<body>
+<th:block layout:fragment="title">登录</th:block>
+
+<th:block layout:fragment="content">
+    <form class="form-horizontal" th:action="@{/post-login}" method="post" id="loginForm">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">用户名:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="username" value="zzl"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">密码:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" name="password" value="zzl"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <button type="button" id="loginBtn" class="btn btn-default">登录</button>
+            </div>
+        </div>
+
+    </form>
+    <script type="text/javascript">
+$(function() {
+    $("#loginBtn").click(function() {
+        $.ajax({
+            url: "/post-login",
+            data: $("#loginForm").serialize(),
+            error: function(xhr, textStatus, errorThrown) {　　
+                if (xhr.status < 500) {　　
+                　　alert("没有权限");
+                } else {　
+                alert("服务器错误");
+                }　　
+            },
+            success: function(data) {
+                if (data.authenticated) {
+                    location.href = "/order/list";
+                } else {
+                    alert("登陆失败");
+                }
+            }
+        });
+   });
+});
+
+
+
+    </script>
+</th:block>
+
+</body>
+</html>

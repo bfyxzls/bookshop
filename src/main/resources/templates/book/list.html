@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/admin">
+
+<head>
+    <title>产品列表</title>
+</head>
+<body>
+<th:block layout:fragment="title">产品列表</th:block>
+
+<div layout:fragment="content">
+    <a href="/book/create" class="btn btn-default">添加产品</a>
+    <a href="/category/create" class="btn btn-default">添加分类</a>
+    <a href="/category/list" class="btn btn-default">管理分类</a>
+
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>名称</th>
+            <th>销售价</th>
+            <th>成本价</th>
+            <th>折扣</th>
+            <th>图像</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="collect,iterStat : ${books}">
+            <td th:text="${collect.name}">lind</td>
+            <td th:text="${collect.salePrice}">0</td>
+            <td th:text="${collect.floorPrice}">0</td>
+            <td th:text="${collect.discountInfo()}">0</td>
+            <td><img th:src="${collect.imgRelativeUrl()}" width="32" height="32"/></td>
+            <td>
+                <a th:href="@{/book/del(id=${collect.id})}">删除</a>
+                <a th:href="@{/book/edit(id=${collect.id})}">修改</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head lang="en" th:fragment="head">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>大叔书店</title>
+        <link href="../../static/css/bootstrap.min.css"
+              th:href="@{/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen"/>
+
+
+        <link href="../../static/css/jquery.dataTables.min.css"
+              th:href="@{/css/jquery.dataTables.min.css}"
+              rel="stylesheet" media="screen"/>
+
+        <link href="../../static/css/mini_springboot.css"
+              th:href="@{/css/mini_springboot.css}"
+              rel="stylesheet" media="screen"/>
+
+        <script src="../../static/js/jquery.min.js"
+                th:src="@{/js/jquery.min.js}"></script>
+
+        <script src="../../static/js/bootstrap.min.js"
+                th:src="@{/js/bootstrap.min.js}"></script>
+
+        <script src="../../static/js/jquery.dataTables.min.js"
+                th:src="@{/js/jquery.dataTables.min.js}"></script>
+
+        <script src="../../static/js/mini_springboot.js"
+                th:src="@{/js/mini_springboot.js}"></script>
+
+        <script src="../../static/js/bootbox.all.min.js"
+                th:src="@{/js/bootbox.all.min.js}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div th:fragment="header">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a class="navbar-brand" href="#" th:href="@{/}">主页</a>
+                                </li>
+                                <li>
+                                    <a href="#" th:href="@{/category/list}">技术资源分类</a>
+                                </li>
+
+                                <li>
+                                    <a href="#" th:href="@{/recommends}">大叔推荐</a>
+                                </li>
+                                <li>
+                                    <a href="#" th:href="@{/news}">程序员直通车</a>
+                                </li>
+
+                                <li th:unless="${session.user !=null}">
+                                    <a href="#" th:href="@{/register}">注册</a>
+                                </li>
+                                <li th:unless="${session.user !=null}">
+                                    <a href="#" th:href="@{/login}">登录</a>
+                                </li>
+                                <li th:if="${session.user !=null}">
+                                    <a href="#" th:href="@{/logout}">登出</a>
+                                </li>
+                                <li>
+                                    <a href="#" th:href="@{/order/list}">网站管理平台</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div layout:fragment="title">仓储大叔</div>
+                </div>
+                <div class="panel-body">
+                    <div layout:fragment="content">content</div>
+                </div>
+            </div>
+
+            <div th:fragment="footer">
+
+                <div class="footer">大叔书店:www.lindddd.top</div>
+
+            </div>
+        </div>
+
+
+    </body>
+</html>

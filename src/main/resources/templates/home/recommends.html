@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th=""
+      layout:decorator="layout/default">
+
+<head>
+    <title>大叔推荐</title>
+</head>
+<body>
+<th:block layout:fragment="title">大叔推荐</th:block>
+
+<div layout:fragment="content">
+
+    <div style="border:1px dashed #ddd;padding:5px;" class="list-group" th:each="collect,iterStat : ${books}">
+        <h4 class="list-group-item-heading">名称：<span th:text="${collect.name}"></span></h4>
+        <p class="list-group-item-text">价格：<span th:text="${collect.salePrice}"></span></p>
+        <p class="list-group-item-text">折扣：<span th:text="${collect.discountInfo()}"></span></p>
+        <img width="128" height="64" th:src="${collect.imgRelativeUrl()}"/>
+    </div>
+</div>
+
+</body>
+</html>

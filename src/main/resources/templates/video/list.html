@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th=""
+      layout:decorator="layout/default">
+
+<head>
+    <title>视频管理</title>
+</head>
+<body>
+<th:block layout:fragment="title">视频管理</th:block>
+
+<div layout:fragment="content">
+    <a href="/video/create" class="btn btn-default">添加视频</a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>地址</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="collect,iterStat : ${list}">
+            <td th:text="${collect.id}">lind</td>
+            <td th:text="${collect.title}">0</td>
+            <td th:text="${collect.filePath}">0</td>
+            <td><a th:href="@{/video/del(id=${collect.id})}">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

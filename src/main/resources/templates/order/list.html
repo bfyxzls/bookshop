@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/admin">
+
+<head>
+    <title>订单列表</title>
+</head>
+<body>
+<th:block layout:fragment="title">订单列表</th:block>
+
+<div layout:fragment="content">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>买家</th>
+            <th>订单金额</th>
+            <th>下单时间</th>
+            <th>状态</th>
+            <th>商品</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="collect,iterStat : ${orders}">
+            <td th:text="${collect.userName}">lind</td>
+            <td th:text="${collect.totalPrice}">0</td>
+            <td th:text="${collect.orderTime}">0</td>
+            <td th:text="${collect.orderStatus}">0</td>
+            <td th:each="item,iterStat : ${collect.orderItemList}">
+                <a href="#" th:href="@{/video/download(id=${item.videoLesson.id})}"> <span th:text="${item.bookName}"></span></a>
+            </td>
+            <td>
+                <a th:href="@{/order/success(id=${collect.id})}">完成</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
