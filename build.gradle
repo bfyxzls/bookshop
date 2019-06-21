@@ -76,7 +76,7 @@ dependencies {
             'com.baomidou:mybatis-plus-boot-starter:3.0.6',
             'org.springframework.cloud:spring-cloud-starter-openfeign',
             'org.apache.commons:commons-lang3:3.5',
-            'com.h2database:h2',
+            'com.h2database:h2:1.4.199',
             'org.springframework.boot:spring-boot-devtools',
             'org.springframework.boot:spring-boot-starter-security',
             'org.springframework.data:spring-data-redis',

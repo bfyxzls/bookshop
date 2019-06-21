@@ -24,7 +24,14 @@
     </select>
 
     <select id="findUsers" resultType="UserInfo" resultMap="lazyUserInfo">
-        SELECT * FROM user_info
+        <!-- h2不支持：to_days,date_add-->
+        SELECT
+        username,
+        realname,
+        TIMESTAMPDIFF(day,updated_on,now()) as lastedOn,
+        TIMESTAMPADD(day,1,updated_on) as updatedOn,
+        date(created_on) as createdOn
+        FROM user_info
     </select>
 
     <select id="findUserById" resultType="UserInfo" parameterType="Long" resultMap="lazyUserInfo">
