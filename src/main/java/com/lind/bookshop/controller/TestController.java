@@ -1,6 +1,7 @@
 package com.lind.bookshop.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.lind.bookshop.client.UserClient;
 import com.lind.bookshop.entity.Book;
 import com.lind.bookshop.entity.Category;
 import com.lind.bookshop.entity.OrderInfo;

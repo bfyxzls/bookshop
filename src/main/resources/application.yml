@@ -87,6 +87,11 @@ ribbon:
   #请求处理的超时时间 下级服务响应最大时间,超出时间消费方（路由也是消费方）返回timeout,超时时间不可大于断路器的超时时间
   readTimeout: 5000
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:6761/eureka
+
 mybatis-plus:
   # 如果是放在src/main/java目录下 classpath:com/yourpackage/*/mapper/*Mapper.xml
   # 如果是放在resource目录 classpath:mapper/*Mappexml
@@ -123,7 +128,7 @@ mybatis-plus:
 spring:
   cloud.refresh.enabled: false #避免mybatis里的循环引用
   application:
-      name: customer-management
+      name: bookshop
   profiles:
       active: dev
   thymeleaf:

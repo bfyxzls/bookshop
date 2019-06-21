@@ -81,7 +81,8 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-security',
             'org.springframework.data:spring-data-redis',
             'redis.clients:jedis',
-
+            'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client',
+            'org.springframework.cloud:spring-cloud-starter-netflix-ribbon',
 
     )
     runtime 'mysql:mysql-connector-java'
