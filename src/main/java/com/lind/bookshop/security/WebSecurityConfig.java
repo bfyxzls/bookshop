@@ -9,8 +9,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -25,7 +23,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   LindAuthenticationSuccessHandler lindAuthenticationSuccessHandler;
-
   @Autowired
   LindAuthenticationFailHandler lindAuthenticationFailHandler;
   @Autowired
@@ -35,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-        .antMatchers("/css/**", "/js/**", "/index","/register","/mgr/**","/actuator/**").permitAll()
+        .antMatchers("/css/**", "/js/**", "/index", "/register", "/mgr/**", "/actuator/**", "/api/v1/**").permitAll()
         .antMatchers("/book/create").hasRole("USER")//按路由授权
         .anyRequest().authenticated()
         .and()
@@ -72,13 +69,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return lindUserNameAuthenticationFilter;
   }
 
-  /**
-   * 密码生成策略.
-   *
-   * @return
-   */
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
 }

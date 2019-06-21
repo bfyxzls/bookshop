@@ -62,6 +62,31 @@ management:
      prometheus: #19、以可以被Prometheus服务器抓取的格式显示metrics信息，默认开启
        enabled: true
 
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+      isolation:
+        thread:
+          #目前有两个容器实例，单个请求超时3s,+重试>3s，超6s则熔断
+          timeoutInMilliseconds: 6000
+
+ribbon:
+  #ribbon请求连接的超时时间- 限制3秒内必须请求到服务，并不限制服务处理的返回时间
+  connectTimeout: 3000
+  #请求处理的超时时间 下级服务响应最大时间,超出时间消费方（路由也是消费方）返回timeout,超时时间不可大于断路器的超时时间
+  readTimeout: 5000
+
 mybatis-plus:
   # 如果是放在src/main/java目录下 classpath:com/yourpackage/*/mapper/*Mapper.xml
   # 如果是放在resource目录 classpath:mapper/*Mappexml
@@ -112,6 +137,7 @@ spring:
              max-file-size: 2MB
         resources:
             static-locations: classpath:static/,file:static/
+
 
 ---
 spring:

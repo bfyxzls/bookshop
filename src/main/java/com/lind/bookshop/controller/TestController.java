@@ -20,11 +20,13 @@ import com.lind.bookshop.util.ResponseUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class TestController {
@@ -42,10 +44,11 @@ public class TestController {
   OrderInfoMapper orderInfoMapper;
   @Autowired
   OrderItemMapper orderItemMapper;
+  @Autowired
+  RestTemplate restTemplate;
 
   @GetMapping("/api/v1/test")
   public ResponseEntity<?> userGet() {
-    userInfoMapper.selectById(0);
     return ResponseUtils.okMessage("success");
   }
 
@@ -75,6 +78,9 @@ public class TestController {
 
   @GetMapping("/api/v1/test/init")
   public String init() {
+    Map result =
+        restTemplate.getForObject("http://localhost:9008/api/v1/test", Map.class);
+
     if (categoryMapper.selectCount(
         new QueryWrapper<Category>().lambda().eq(Category::getName, "大叔商店")) == 0) {
       Category root = Category.builder()

@@ -23,7 +23,7 @@ public class LindAuthenticationProvider extends AbstractUserDetailsAuthenticatio
   @Autowired
   UserDetailsService userDetailsService;
   @Autowired
-  private PasswordEncoder passwordEncoder;
+  PasswordEncoder passwordEncoder;
 
   /**
    * 校验密码有效性 step3.

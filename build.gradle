@@ -78,7 +78,10 @@ dependencies {
             'org.apache.commons:commons-lang3:3.5',
             'com.h2database:h2',
             'org.springframework.boot:spring-boot-devtools',
-            'org.springframework.boot:spring-boot-starter-security'
+            'org.springframework.boot:spring-boot-starter-security',
+            'org.springframework.data:spring-data-redis',
+            'redis.clients:jedis',
+
 
     )
     runtime 'mysql:mysql-connector-java'
@@ -86,6 +89,7 @@ dependencies {
 
     testCompile(
             'org.springframework.boot:spring-boot-starter-test',
+            'com.github.kstyrc:embedded-redis:0.6'
 
     )
 }
