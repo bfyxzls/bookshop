@@ -26,6 +26,7 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +55,8 @@ public class TestController {
   UserClient userClient;
   @Autowired
   ProductClient productClient;
+  @Autowired
+  PasswordEncoder passwordEncoder;
 
   @GetMapping("/api/v1/test")
   public ResponseEntity<?> userGet() {
@@ -115,7 +118,7 @@ public class TestController {
       categoryMapper.insert(code);
       UserInfo userInfo = UserInfo.builder()
           .username("lind")
-          .password("zzl123")
+          .password(passwordEncoder.encode("zzl123"))
           .realname("大叔")
           .age(37)
           .telephone("13521972990")

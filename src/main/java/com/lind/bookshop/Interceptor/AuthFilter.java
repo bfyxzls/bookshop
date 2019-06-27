@@ -12,7 +12,7 @@ import org.springframework.web.filter.GenericFilterBean;
  * 拦截器，需要在启动类添加注解：@ServletComponentScan.
  */
 @WebFilter(urlPatterns = {"/book/*", "/category/*", "/order/list"}, filterName = "adminFilter")
-public class AdminFilter extends GenericFilterBean {
+public class AuthFilter extends GenericFilterBean {
 
 
   @Override
