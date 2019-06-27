@@ -1,5 +1,6 @@
 package com.lind.bookshop.client.fallback;
 
+import com.google.common.collect.ImmutableMap;
 import com.lind.bookshop.client.UserClient;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -10,13 +11,13 @@ import org.springframework.stereotype.Component;
 public class UserClientFallback implements UserClient {
   @Override
   public Map getUser(Long id) {
-    logger.info("getUser.error");
+    logger.info("feign.getUser.error");
     return null;
   }
 
   @Override
   public Map getUsers() {
-    logger.info("getUsers.error");
-    return null;
+    logger.info("feign.getUsers.error.retrun.default");
+    return ImmutableMap.of("name", "lind", "sex", "male");
   }
 }

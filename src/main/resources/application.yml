@@ -1,3 +1,21 @@
+spring:
+  cloud.refresh.enabled: false #避免mybatis里的循环引用
+  application:
+    name: bookshop
+  profiles:
+    active: dev
+  thymeleaf:
+    prefix: classpath:/templates/ #注意页面和action指向路径开头不要加/
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+    servlet:
+      multipart:
+        max-file-size: 2MB
+    resources:
+      static-locations: classpath:static/,file:static/
+
 server:
   port: 9008
 
@@ -86,6 +104,8 @@ ribbon:
   connectTimeout: 3000
   #请求处理的超时时间 下级服务响应最大时间,超出时间消费方（路由也是消费方）返回timeout,超时时间不可大于断路器的超时时间
   readTimeout: 5000
+  eager-load:
+     enabled: true
 
 eureka:
   client:
@@ -125,23 +145,7 @@ mybatis-plus:
     #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
     map-underscore-to-camel-case: true
     cache-enabled: false
-spring:
-  cloud.refresh.enabled: false #避免mybatis里的循环引用
-  application:
-      name: bookshop
-  profiles:
-      active: dev
-  thymeleaf:
-        prefix: classpath:/templates/ #注意页面和action指向路径开头不要加/
-        mode: HTML5
-        encoding: UTF-8
-        content-type: text/html
-        cache: false
-        servlet:
-          multipart:
-             max-file-size: 2MB
-        resources:
-            static-locations: classpath:static/,file:static/
+
 
 
 ---

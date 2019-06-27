@@ -2,7 +2,10 @@ package com.lind.bookshop.utils;
 
 import com.lind.bookshop.util.CommonUtils;
 import com.lind.bookshop.util.SortNumber;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 import org.springframework.util.Assert;
@@ -17,9 +20,9 @@ public class CommonUtilsTest {
   @Test
   public void tokenSplit() {
     String token = "token=123";
-    Assert.isTrue("123" .equals(token.substring(6)));
+    Assert.isTrue("123".equals(token.substring(6)));
     String token2 = "token=OR123455";
-    Assert.isTrue("OR123455" .equals(token2.substring(token2.lastIndexOf("OR"))));
+    Assert.isTrue("OR123455".equals(token2.substring(token2.lastIndexOf("OR"))));
   }
 
   @Test
@@ -37,6 +40,13 @@ public class CommonUtilsTest {
     for (SortDemo item : sortDemoList) {
       System.out.println(item.toString());
     }
+  }
+
+  @Test
+  public void dateString() {
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    String dateString = formatter.format(new Date());
+    System.out.println(dateString);
   }
 
   public class SortDemo implements SortNumber {
@@ -96,5 +106,6 @@ public class CommonUtilsTest {
     public Integer getSortValue() {
       return this.value;
     }
+
   }
 }

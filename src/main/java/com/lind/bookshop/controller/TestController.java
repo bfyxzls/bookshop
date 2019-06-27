@@ -1,6 +1,7 @@
 package com.lind.bookshop.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.lind.bookshop.client.ProductClient;
 import com.lind.bookshop.client.UserClient;
 import com.lind.bookshop.entity.Book;
 import com.lind.bookshop.entity.Category;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
+@Slf4j
 public class TestController {
   @Autowired
   UserInfoMapper userInfoMapper;
@@ -47,10 +50,19 @@ public class TestController {
   OrderItemMapper orderItemMapper;
   @Autowired
   RestTemplate restTemplate;
+  @Autowired
+  UserClient userClient;
+  @Autowired
+  ProductClient productClient;
 
   @GetMapping("/api/v1/test")
   public ResponseEntity<?> userGet() {
-    return ResponseUtils.okMessage("success");
+    Map users = userClient.getUsers();
+    if (users != null) {
+      //当UserClient出现问题时，返回值为null，所以业务逻辑时需要先判断一下
+    }
+    productClient.getProducts();
+    return ResponseUtils.ok(users);
   }
 
   @GetMapping("/api/v1/test/page")
