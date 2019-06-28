@@ -44,7 +44,7 @@ public class UserController {
 
   @GetMapping("/logout")
   public String logout(HttpSession httpSession) {
-    httpSession.removeAttribute("user");
-    return "/";
+    httpSession.removeAttribute("__spring_security_scpf_applied");
+    return "redirect:/";
   }
 }

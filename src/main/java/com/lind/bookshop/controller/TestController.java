@@ -94,8 +94,6 @@ public class TestController {
 
   @GetMapping("/api/v1/test/init")
   public String init() {
-    Map result =
-        restTemplate.getForObject("http://localhost:9008/api/v1/test", Map.class);
 
     if (categoryMapper.selectCount(
         new QueryWrapper<Category>().lambda().eq(Category::getName, "大叔商店")) == 0) {
