@@ -64,6 +64,7 @@ public class TestController {
     if (users != null) {
       //当UserClient出现问题时，返回值为null，所以业务逻辑时需要先判断一下
     }
+    logger.info("print ok");
     productClient.getProducts();
     return ResponseUtils.ok(users);
   }

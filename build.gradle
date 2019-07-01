@@ -83,6 +83,8 @@ dependencies {
             'redis.clients:jedis',
             'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client',
             'org.springframework.cloud:spring-cloud-starter-netflix-ribbon',
+            'org.springframework.cloud:spring-cloud-starter-sleuth',
+            'org.springframework.cloud:spring-cloud-starter-zipkin',
 
     )
     runtime 'mysql:mysql-connector-java'
