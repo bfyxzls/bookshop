@@ -6,6 +6,9 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+/**
+ * 降级回退类.
+ */
 @Component
 @Slf4j
 public class UserClientFallback implements UserClient {
