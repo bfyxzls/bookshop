@@ -1,8 +1,8 @@
 package com.lind.bookshop.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableMap;
 import java.io.IOException;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +35,9 @@ public class LindAuthenticationFailHandler
     response.setCharacterEncoding("UTF-8");
     response.setContentType("application/json; charset=utf-8");
     String jsonMessage = objectMapper.writeValueAsString(
-        ImmutableMap.of("message", exception.getMessage()));
+        new HashMap<String, String>() {{
+          put("message", exception.getMessage());
+        }});
     response.getWriter().append(jsonMessage);
     logger.info("fail,writeResponse,responseBody={}", jsonMessage);
   }

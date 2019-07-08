@@ -1,9 +1,9 @@
 package com.lind.bookshop.service;
 
-import com.google.common.collect.ImmutableMap;
 import com.lind.bookshop.entity.UserInfo;
 import com.lind.bookshop.exception.Exceptions;
 import com.lind.bookshop.mapper.UserInfoMapper;
+import java.util.HashMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +33,13 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserInfo login(UserInfo userInfo) {
     UserInfo user = userInfoBaseMapper.findUserByNamePassword(
-        ImmutableMap.of("userName", userInfo.getUsername(), "password", userInfo.getPassword()));
-    if (user == null)
+        new HashMap<String, Object>() {{
+          put("userName", userInfo.getUsername());
+          put("password", userInfo.getPassword());
+        }});
+    if (user == null) {
       throw Exceptions.badRequestParams("用户密码不正确");
+    }
     return user;
   }
 
