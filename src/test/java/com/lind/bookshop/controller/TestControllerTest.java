@@ -10,12 +10,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lind.bookshop.TestBase;
 import com.lind.bookshop.entity.Book;
-import com.lind.bookshop.entity.UserInfo;
-import com.lind.bookshop.entity.UserShipper;
 import com.lind.bookshop.mapper.UserInfoMapper;
 import com.lind.bookshop.service.BookService;
-import java.util.List;
-import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -79,17 +75,6 @@ public class TestControllerTest extends TestBase {
     Assert.assertEquals(2, book2.getTotal());
 
   }
-
-  @Test
-  public void lazyData() throws Exception {
-    init();
-    List<UserInfo> entity = userInfoMapper.findUsers();
-    UserShipper userShipper = entity.get(0).getUserShipper();
-    String address = userShipper.getAddress();
-    Assert.assertEquals("beijing", address);
-    List<Map<String, Object>> mapList = userInfoMapper.findMapUsers();
-  }
-
 
   private void init() throws Exception {
     mockMvc.perform(

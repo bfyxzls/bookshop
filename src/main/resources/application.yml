@@ -1,5 +1,5 @@
 spring:
-  #cloud.refresh.enabled: false #避免mybatis里的循环引用
+  cloud.refresh.enabled: false #避免mybatis里的循环引用
   application:
     name: bookshop
   profiles:
@@ -16,6 +16,85 @@ spring:
     resources:
       static-locations: classpath:static/,file:static/
 
+
+
+server:
+  port: 9008
+
+
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+      isolation:
+        thread:
+          #目前有两个容器实例，单个请求超时3s,+重试>3s，超6s则熔断
+          timeoutInMilliseconds: 6000
+
+ribbon:
+  #ribbon请求连接的超时时间- 限制3秒内必须请求到服务，并不限制服务处理的返回时间
+  connectTimeout: 3000
+  #请求处理的超时时间 下级服务响应最大时间,超出时间消费方（路由也是消费方）返回timeout,超时时间不可大于断路器的超时时间
+  readTimeout: 5000
+  eager-load:
+     enabled: true
+
+
+
+mybatis-plus:
+  # 如果是放在src/main/java目录下 classpath:com/yourpackage/*/mapper/*Mapper.xml
+  # 如果是放在resource目录 classpath:mapper/*Mappexml
+  mapper-locations: classpath:mapper/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.lind.bookshop.entity
+  lazyLoadingEnabled: true #开启延时加载
+  aggressiveLazyLoading: false #只有当访问扩展属性时才加载它
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局 唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #mp2.3+ 全局表前缀 mp_
+    #table-prefix: user_
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    # Sequence序列接口实现类配置
+    #key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
+    #逻辑删除配置（下面3个配置）
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+    #自定义填充策略接口实现
+    #meta-object-handler: com.baomidou.springboot.MyMetaObjectHandler
+  typeHandlersPackage: com.lind.bookshop.Interceptor
+  configuration:
+    #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+
+
+---
+spring:
+  profiles: dev
+  datasource:
+     driver-class-name: com.mysql.jdbc.Driver
+     url: jdbc:mysql://localhost:3306/bookshop?useSSL=false&characterEncoding=utf8&useSSL=false
+     username: root
+     password: Abc123##
   sleuth:
     web:
       client:
@@ -25,8 +104,10 @@ spring:
     zipkin:
       base-url: http://localhost:9411/ # 指定了 Zipkin 服务器的地址
 
-server:
-  port: 9008
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:5761/eureka,http://localhost:6761/eureka
 
 management:
  server.port: 19008
@@ -88,83 +169,6 @@ management:
        enabled: true
      prometheus: #19、以可以被Prometheus服务器抓取的格式显示metrics信息，默认开启
        enabled: true
-
-feign:
-  hystrix:
-    enabled: true
-  httpclient:
-    enabled: false
-  okhttp:
-    enabled: true
-
-hystrix:
-  command:
-    default:
-      execution:
-        timeout:
-          enabled: true
-      isolation:
-        thread:
-          #目前有两个容器实例，单个请求超时3s,+重试>3s，超6s则熔断
-          timeoutInMilliseconds: 6000
-
-ribbon:
-  #ribbon请求连接的超时时间- 限制3秒内必须请求到服务，并不限制服务处理的返回时间
-  connectTimeout: 3000
-  #请求处理的超时时间 下级服务响应最大时间,超出时间消费方（路由也是消费方）返回timeout,超时时间不可大于断路器的超时时间
-  readTimeout: 5000
-  eager-load:
-     enabled: true
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:5761/eureka,http://localhost:6761/eureka
-
-mybatis-plus:
-  # 如果是放在src/main/java目录下 classpath:com/yourpackage/*/mapper/*Mapper.xml
-  # 如果是放在resource目录 classpath:mapper/*Mappexml
-  mapper-locations: classpath:mapper/*.xml
-  #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.lind.bookshop.entity
-  lazyLoadingEnabled: true #开启延时加载
-  aggressiveLazyLoading: false #只有当访问扩展属性时才加载它
-  global-config:
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局 唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    id-type: 0
-    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-    field-strategy: 2
-    #驼峰下划线转换
-    db-column-underline: true
-    #mp2.3+ 全局表前缀 mp_
-    #table-prefix: user_
-    #刷新mapper 调试神器
-    refresh-mapper: true
-    #数据库大写下划线转换
-    #capital-mode: true
-    # Sequence序列接口实现类配置
-    #key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
-    #逻辑删除配置（下面3个配置）
-    logic-delete-value: 1
-    logic-not-delete-value: 0
-    #自定义填充策略接口实现
-    #meta-object-handler: com.baomidou.springboot.MyMetaObjectHandler
-  typeHandlersPackage: com.lind.bookshop.Interceptor
-  configuration:
-    #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
-    map-underscore-to-camel-case: true
-    cache-enabled: false
-
-
-
----
-spring:
-  profiles: dev
-  datasource:
-     driver-class-name: com.mysql.jdbc.Driver
-     url: jdbc:mysql://localhost:3306/bookshop?useSSL=false&characterEncoding=utf8&useSSL=false
-     username: root
-     password: Abc123##
 
 ---
 spring:
