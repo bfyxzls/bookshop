@@ -3,7 +3,7 @@ spring:
   application:
     name: bookshop
   profiles:
-    active: test
+    active: dev
   thymeleaf:
     prefix: classpath:/templates/ #注意页面和action指向路径开头不要加/
     mode: HTML5

@@ -74,7 +74,7 @@
     <script type="text/javascript">
 $(function(){
  $("#reg").click(function(){
-  $.post("/category/create",$("#regform").serialize(),function(data){
+  $.post("/book/create",$("#regform").serialize(),function(data){
     if(data.status!=200){
        alert(data.error.message);
       }

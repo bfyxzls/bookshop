@@ -2,11 +2,12 @@ package com.lind.bookshop.event.listener;
 
 import com.lind.bookshop.event.source.ChangeBookEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
-@Async
+@Order(1)
 public class CallPhoneEventListener {
   @EventListener
   public void handleEvent(ChangeBookEvent event) throws Exception {
