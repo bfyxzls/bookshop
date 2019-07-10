@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 public class EmailEventListener {
   @EventListener
   public void handleEvent(ChangeBookEvent event) throws Exception {
-    Thread.sleep(5000);
     System.out.println("Email-消息：建立图书:" + event.getTitle());
   }
 }
