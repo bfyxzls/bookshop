@@ -58,10 +58,16 @@ mybatis-plus:
 spring:
   profiles: dev
   datasource:
-     driver-class-name: com.mysql.jdbc.Driver
-     url: jdbc:mysql://localhost:3306/bookshop?useSSL=false&characterEncoding=utf8&useSSL=false
-     username: root
-     password: Abc123##
+    url: jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
+    driver-class-name: org.h2.Driver
+    schema: classpath:db/*.sql
+    initialization-mode: always
+    platform: h2
+#  datasource:
+#     driver-class-name: com.mysql.jdbc.Driver
+#     url: jdbc:mysql://localhost:3306/bookshop?useSSL=false&characterEncoding=utf8&useSSL=false
+#     username: root
+#     password: root
   sleuth:
     web:
       client:

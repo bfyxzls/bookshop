@@ -74,6 +74,7 @@ dependencies {
             'com.github.zhanhb:thymeleaf-layout-dialect:2.3.0',
             'org.springframework.boot:spring-boot-starter-cache',
             'com.baomidou:mybatis-plus-boot-starter:3.0.6',
+            'org.springframework.boot:spring-boot-devtools',
 //            'org.springframework.cloud:spring-cloud-starter-openfeign',
             'org.apache.commons:commons-lang3:3.5',
             'com.h2database:h2:1.4.199',

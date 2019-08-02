@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-        .antMatchers("/css/**", "/js/**", "/", "/news", "/recommends", "/register", "/mgr/**", "/actuator/**", "/api/v1/**").permitAll()
+        .antMatchers("/css/**", "/js/**", "/", "/news", "/recommends", "/img/**", "/register", "/mgr/**", "/actuator/**", "/api/v1/**").permitAll()
         .antMatchers("/book/create").hasRole("USER")//按路由授权
         .anyRequest().authenticated()
         .and()
