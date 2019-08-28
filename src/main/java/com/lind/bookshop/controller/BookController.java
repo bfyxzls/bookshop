@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import reactor.core.publisher.Mono;
 
 @Controller
 public class BookController {
@@ -102,9 +103,9 @@ public class BookController {
   }
 
   @GetMapping(list)
-  public String olds(Model model) {
+  public Mono<String> olds(Model model) {
     model.addAttribute("books", bookMapper.selectList(new QueryWrapper<>()));
-    return list;
+    return Mono.just(list);
   }
 
   /**

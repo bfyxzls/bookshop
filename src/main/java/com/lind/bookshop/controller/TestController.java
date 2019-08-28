@@ -27,6 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 @RestController
 @Slf4j
@@ -49,11 +50,12 @@ public class TestController {
   PasswordEncoder passwordEncoder;
 
   @GetMapping("/api/v1/test/page")
-  public ResponseEntity<?> dataGet() {
+  public Mono<ResponseEntity> dataGet() {
     List<UserInfo> userInfoList = new ArrayList<>();
     userInfoList.add(UserInfo.builder().username("zzl1").realname("lind1").build());
     userInfoList.add(UserInfo.builder().username("zzl2").realname("lind2").build());
-    return ResponseUtils.ok(userInfoList, userInfoList.size());
+    return Mono.just(
+        ResponseUtils.ok(userInfoList, userInfoList.size()));
   }
 
   @GetMapping("/api/v1/test/validate-name")

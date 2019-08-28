@@ -68,6 +68,7 @@ dependencyManagement {
 dependencies {
     compile(
             'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.boot:spring-boot-starter-webflux',
             'org.springframework.boot:spring-boot-starter-actuator',
             //springboot2.0需要引用thymeleaf-layout-dialect,而1.5不需要引用它
             'org.springframework.boot:spring-boot-starter-thymeleaf',
@@ -93,7 +94,8 @@ dependencies {
 
     testCompile(
             'org.springframework.boot:spring-boot-starter-test',
-            'com.github.kstyrc:embedded-redis:0.6'
+            'com.github.kstyrc:embedded-redis:0.6',
+            'io.projectreactor:reactor-test'
 
     )
 }
